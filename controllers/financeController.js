@@ -1,17 +1,28 @@
 const asyncHandler = require("express-async-handler");
+const Finance = require("../models/financeModel");
 
 const getFinances = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: "Get Finances" });
+  const finances = await Finance.find();
+
+  res.status(200).json(finances);
 });
 
 const setFinances = asyncHandler(async (req, res) => {
-  if (!req.body.text) {
+  const { month, day, finType, finAmt } = req.body;
+
+  if (!month || !day || !finType || !finAmt) {
     res.status(400);
     throw new Error("Please add a text field");
   }
-  console.log(req.body);
 
-  res.status(200).json({ message: "Set Finances" });
+  const finance = await Finance.create({
+    month,
+    day,
+    finType,
+    finAmt,
+  });
+
+  res.status(200).json(finance);
 });
 
 module.exports = { getFinances, setFinances };
