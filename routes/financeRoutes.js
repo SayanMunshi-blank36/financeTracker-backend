@@ -4,7 +4,8 @@ const {
   getFinances,
   setFinances,
 } = require("../controllers/financeController");
+const { protect } = require("../middleware/authMiddleware");
 
-router.route("/").get(getFinances).post(setFinances);
+router.route("/").get(protect, getFinances).post(protect, setFinances);
 
 module.exports = router;
