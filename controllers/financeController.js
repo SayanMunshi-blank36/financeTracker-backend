@@ -12,7 +12,7 @@ const setFinances = asyncHandler(async (req, res) => {
 
   if (!month || !day || !finType || !finAmt) {
     res.status(400);
-    throw new Error("Please add a text field");
+    throw new Error("Please add all the relevant fields");
   }
 
   const finance = await Finance.create({
